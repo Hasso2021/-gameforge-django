@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-6">Galerie des jeux publics</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for game in games %}
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-xl font-bold mb-2">{{ game.title }}</h2>
+        <p class="text-sm text-gray-500 mb-1">Genre: {{ game.genre }}</p>
+        <p class="text-sm mb-2">Créé par: {{ game.user.username }}</p>
+
+        {% if game.concept_art_character %}
+        <img src="{{ game.concept_art_character.url }}" alt="Personnage" class="rounded w-full h-48 object-cover mb-3">
+        {% elif game.concept_art_environment %}
+        <img src="{{ game.concept_art_environment.url }}" alt="Environnement"
+            class="rounded w-full h-48 object-cover mb-3">
+        {% endif %}
+
+        <a href="{% url 'game_detail' game.id %}" class="text-blue-600 hover:underline">Voir le détail</a>
+    </div>
+    {% empty %}
+    <p>Aucun jeu disponible pour l'instant.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="text-3xl font-bold mb-2">{{ game.title }}</h1>
+<p class="text-sm text-gray-600 mb-4">Genre: {{ game.genre }} | Créé par: {{ game.user.username }}</p>
+
+<!-- Thème -->
+<div class="mb-4">
+    <h2 class="text-xl font-semibold">Thème</h2>
+    <p>{{ game.theme }}</p>
+</div>
+
+<!-- Inspirations -->
+{% if game.inspirations %}
+<div class="mb-4">
+    <h2 class="text-xl font-semibold">Inspirations</h2>
+    <p>{{ game.inspirations }}</p>
+</div>
+{% endif %}
+
+<!-- Univers généré -->
+{% if game.universe %}
+<div class="mb-4">
+    <h2 class="text-xl font-semibold">Univers</h2>
+    <p>{{ game.universe }}</p>
+</div>
+{% endif %}
+
+<!-- Histoire générée -->
+{% if game.story %}
+<div class="mb-4">
+    <h2 class="text-xl font-semibold">Histoire</h2>
+    <pre class="whitespace-pre-wrap">{{ game.story }}</pre>
+</div>
+{% endif %}
+
+<!-- Art conceptuel : personnage -->
+{% if game.concept_art_character %}
+<div class="mb-6">
+    <h2 class="text-xl font-semibold">Art du personnage</h2>
+    <img src="{{ game.concept_art_character.url }}" alt="Art du personnage" class="rounded shadow max-w-md">
+</div>
+{% endif %}
+
+<!-- Art conceptuel : environnement -->
+{% if game.concept_art_environment %}
+<div class="mb-6">
+    <h2 class="text-xl font-semibold">Art de l’environnement</h2>
+    <img src="{{ game.concept_art_environment.url }}" alt="Art de l’environnement" class="rounded shadow max-w-md">
+</div>
+{% endif %}
+
+<!-- Personnages associés -->
+{% if game.characters.all %}
+<div class="mt-6">
+    <h2 class="text-xl font-semibold">Personnages</h2>
+    <ul class="list-disc pl-6">
+        {% for character in game.characters.all %}
+        <li class="mb-2">
+            <strong>{{ character.name }}</strong> ({{ character.role }})<br>
+            <em>{{ character.background }}</em>
+            {% if character.abilities %}<br><small>Capacités : {{ character.abilities }}</small>{% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<!-- Lien pour ajouter un personnage -->
+<a href="{% url 'add_character' game.id %}"
+    class="inline-block mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+    Ajouter un personnage
+</a>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GameForge</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+
+<body>
+    <nav class="bg-white shadow p-4 flex justify-between">
+        <div class="text-xl font-bold">🎮 GameForge</div>
+        <div class="space-x-4">
+            <a href="{% url 'create_game' %}" class="hover:underline">Créer un jeu</a>
+            <a href="{% url 'game_gallery' %}" class="hover:underline">Galerie</a>
+            {% if user.is_authenticated %}
+            <span>{{ user.username }}</span>
+            <a href="{% url 'logout' %}" class="hover:underline text-red-500">Déconnexion</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="hover:underline">Connexion</a>
+            <a href="{% url 'signup' %}" class="hover:underline">Inscription</a>
+            {% endif %}
+        </div>
+    </nav>
+    <main class="container mx-auto p-6">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+
+</html>
