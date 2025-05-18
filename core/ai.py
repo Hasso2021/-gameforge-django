@@ -1,24 +1,28 @@
+
 import requests
 from django.core.files.base import ContentFile
 from dotenv import load_dotenv
 
 import os
 
-
 load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
+print("Token loaded:", bool(HF_TOKEN))
+if not HF_TOKEN:
+    raise ValueError("Hugging Face token not found. Please set the HF_TOKEN environment variable.")
+
 
 # --- TEXT MODEL CONFIG
 
 TEXT_API_URL = "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1"
 TEXT_HEADERS = {
-    "Authorization": "Bearer {HF_TOKEN}"
+    "Authorization": f"Bearer {HF_TOKEN}"
 }
 
 # --- IMAGE MODEL CONFIG
 IMAGE_API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
 IMAGE_HEADERS = {
-    "Authorization": "Bearer {HF_TOKEN}"
+    "Authorization": f"Bearer {HF_TOKEN}"
 }
 
 def query_text_model(prompt):
